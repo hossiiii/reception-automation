@@ -22,6 +22,7 @@ yarn-debug.log*
 yarn-error.log*
 .env*.local
 .env
+.env.sample
 .vercel/
 .idea/
 .vscode/
