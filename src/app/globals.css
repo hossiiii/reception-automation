@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles for tablet optimization */
+@layer base {
+  * {
+    @apply box-border;
+  }
+  
+  html {
+    @apply h-full;
+    /* Prevent zoom on double-tap (tablet optimization) */
+    touch-action: manipulation;
+  }
+  
+  body {
+    @apply h-full;
+    /* Improve text rendering on tablets */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+  }
+  
+  /* Ensure buttons and interactive elements are properly styled */
+  button {
+    @apply touch-target cursor-pointer;
+    /* Remove default button styles */
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+  }
+  
+  /* Input and form elements for tablet */
+  input, select, textarea {
+    @apply touch-target-lg;
+    /* Prevent zoom on focus in iOS Safari */
+    font-size: 16px;
+  }
+  
+  /* Link styles */
+  a {
+    @apply touch-target;
+    text-decoration: none;
+  }
+}
+
+/* Component styles */
+@layer components {
+  /* Glassmorphism card effect */
+  .glass-card {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-3xl shadow-2xl;
+  }
+  
+  /* Neumorphism button effect */
+  .neu-button {
+    @apply bg-gradient-to-br from-gray-100 to-gray-200 shadow-neu-outset rounded-2xl;
+    transition: all 0.2s ease;
+  }
+  
+  .neu-button:hover {
+    @apply shadow-neu-inset transform scale-[0.98];
+  }
+  
+  .neu-button:active {
+    @apply shadow-neu-pressed;
+  }
+  
+  /* Touch feedback animation */
+  .touch-feedback {
+    @apply transition-all duration-150 ease-out;
+  }
+  
+  .touch-feedback:active {
+    @apply scale-95 brightness-95;
+  }
+  
+  /* Loading spinner animations */
+  .spinner {
+    @apply animate-spin;
+  }
+  
+  .pulse-soft {
+    @apply animate-pulse-fast;
+  }
+  
+  /* Voice activity indicator */
+  .voice-active {
+    @apply relative;
+  }
+  
+  .voice-active::before {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-green-400/30 animate-ping;
+  }
+  
+  /* Connection status indicators */
+  .status-connected {
+    @apply bg-green-500 text-white;
+  }
+  
+  .status-connecting {
+    @apply bg-yellow-500 text-white animate-pulse;
+  }
+  
+  .status-disconnected {
+    @apply bg-red-500 text-white;
+  }
+  
+  .status-error {
+    @apply bg-red-600 text-white animate-bounce;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  /* Touch target utilities */
+  .touch-safe-area {
+    @apply p-touch-safe;
+  }
+  
+  /* Tablet-specific spacing */
+  .tablet-padding {
+    @apply p-8 md:p-12 lg:p-16;
+  }
+  
+  .tablet-margin {
+    @apply m-4 md:m-8 lg:m-12;
+  }
+  
+  /* Font size utilities for tablet readability */
+  .text-tablet-sm {
+    @apply text-touch-sm;
+  }
+  
+  .text-tablet-base {
+    @apply text-touch-base;
+  }
+  
+  .text-tablet-lg {
+    @apply text-touch-lg;
+  }
+  
+  .text-tablet-xl {
+    @apply text-touch-xl;
+  }
+  
+  .text-tablet-2xl {
+    @apply text-touch-2xl;
+  }
+  
+  /* Gradient backgrounds */
+  .gradient-primary {
+    @apply bg-gradient-to-br from-blue-50 to-indigo-100;
+  }
+  
+  .gradient-success {
+    @apply bg-gradient-to-br from-green-400 to-blue-500;
+  }
+  
+  .gradient-warning {
+    @apply bg-gradient-to-br from-orange-400 to-red-500;
+  }
+  
+  /* Custom scrollbar for tablets */
+  .custom-scrollbar {
+    scrollbar-width: thick;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-400/50 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500/50;
+  }
+  
+  /* Hide scrollbar when not needed */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Focus styles for accessibility */
+  .focus-visible {
+    @apply outline-none ring-4 ring-blue-500/50 ring-offset-2;
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .glass-card {
+      @apply bg-white border-2 border-black;
+    }
+    
+    .neu-button {
+      @apply bg-white border-2 border-black;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .touch-feedback,
+    .spinner,
+    .pulse-soft {
+      @apply transition-none animate-none;
+    }
+  }
+  
+  /* Dark mode adaptations */
+  @media (prefers-color-scheme: dark) {
+    .gradient-primary {
+      @apply from-gray-900 to-blue-900;
+    }
+    
+    .glass-card {
+      @apply bg-gray-800/30 border-gray-600/30;
+    }
+  }
+}
+
+/* Animation keyframes */
+@keyframes voice-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.voice-pulse {
+  animation: voice-pulse 2s ease-in-out infinite;
+}
+
+/* Print styles (in case needed for debugging) */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
