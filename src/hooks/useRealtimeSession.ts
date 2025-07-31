@@ -85,7 +85,7 @@ export function useRealtimeSession({
           type: 'session.update',
           session: {
             model: 'gpt-4o-realtime-preview-2024-10-01',
-            voice: 'alloy',
+            voice: 'shimmer',
             input_audio_format: 'pcm16',
             output_audio_format: 'pcm16',
             instructions: session.systemPrompt,
@@ -157,6 +157,9 @@ export function useRealtimeSession({
         audioElement.autoplay = true
         audioElement.controls = false
         audioElement.volume = 1.0
+        audioElement.preload = 'auto'
+        // Add small buffer to prevent audio cutoff
+        audioElement.setAttribute('crossorigin', 'anonymous')
         
         // Store reference to prevent duplicates
         remoteAudioRef.current = audioElement
@@ -175,11 +178,14 @@ export function useRealtimeSession({
         // Clean up when audio ends
         audioElement.onended = () => {
           console.log('AI response audio ended')
-          setIsSpeaking(false)
-          if (audioElement.parentNode) {
-            audioElement.parentNode.removeChild(audioElement)
-          }
-          remoteAudioRef.current = null
+          // Add small delay to ensure audio buffer is fully played
+          setTimeout(() => {
+            setIsSpeaking(false)
+            if (audioElement.parentNode) {
+              audioElement.parentNode.removeChild(audioElement)
+            }
+            remoteAudioRef.current = null
+          }, 100) // 100ms buffer to prevent cutoff
         }
         
         // Also clean up if audio errors
@@ -347,9 +353,9 @@ export function useRealtimeSession({
         break
         
       case 'response.audio.done':
-        // Audio response finished
-        console.log('Audio response completed')
-        setIsSpeaking(false)
+        // Audio response finished - but don't stop speaking here
+        // Wait for actual audio playback to complete
+        console.log('Audio response completed - waiting for playback to finish')
         break
         
       case 'response.output_item.added':

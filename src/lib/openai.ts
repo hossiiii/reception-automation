@@ -17,7 +17,7 @@ export const REALTIME_WEBSOCKET_URL = `wss://api.openai.com/v1/realtime?model=${
 // Default configuration for Realtime API
 export const DEFAULT_REALTIME_CONFIG = {
   model: REALTIME_MODEL,
-  voice: 'alloy', // Available voices: alloy, echo, fable, onyx, nova, shimmer
+  voice: 'shimmer', // Available voices: alloy, echo, fable, onyx, nova, shimmer
   input_audio_format: 'pcm16',
   output_audio_format: 'pcm16',
   turn_detection: {

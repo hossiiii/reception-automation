@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server'
-import { WebSocket } from 'ws'
 
 // WebSocket proxy for OpenAI Realtime API
 // This handles authentication server-side since browsers can't send custom headers to WebSocket

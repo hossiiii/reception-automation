@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         model: 'gpt-4o-realtime-preview-2024-10-01',
-        voice: 'alloy',
+        voice: 'shimmer',
       }),
     })
     
